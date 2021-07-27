@@ -12,12 +12,13 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+//Palauttaa welcome sivun
 Route::get('/', function () {
     return view('welcome');
 });
-
+//Laravel valmiiksi rakennettu auth reitit
 Auth::routes();
 
+//Hakee Spa sivun
 Route::get('/app', [App\Http\Controllers\AppController::class, 'index'])->name('app');
 
