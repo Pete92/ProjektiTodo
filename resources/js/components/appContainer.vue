@@ -49,7 +49,7 @@
   export default {
     data: () => ({ drawer: null }),
     methods: {
-        //kun painetaan @click="logout"
+        //kun painetaan logout
         logout(){
            this.$store.dispatch("currentUser/logoutUser"); //kutsuu actionin joka loggaa ulos käyttäjän
         },
@@ -60,6 +60,8 @@
       if( localStorage.hasOwnProperty("login_token") ) {
         //Jos vaihdetaan sivua niin tämä tokeni pysyy localStoragessa. esim jos mennää info sivulle, niin tokeni pysyy
         axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('login_token');
+
+        //this.$store.dispatch('currentUser/getUser');  Jos halutaan kirjautunut käyttäjä stateen
       } else {
         window.location.replace("/login"); //muuten palataan /login sivulle
       }

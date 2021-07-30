@@ -22,8 +22,9 @@
     </head>
     <body class="antialiased">
         <div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center py-4 sm:pt-0">
-            @if (Route::has('login'))
-                <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
+            <div>
+                @if (Route::has('login'))
+                <div class="relative text-center">
                     @auth
                         <a href="{{ url('/app') }}" class="text-sm text-gray-700 underline">Home</a>
                     @else
@@ -35,7 +36,6 @@
                     @endauth
                 </div>
             @endif
-            <div>
                 <h3>TodoList Harjoitus käyttäen Vue ja Laravel.</h3>
                 <div>
                     <p>Kun rekisteröidytään tai kirjaudutaan, niin alkaa SPA.</p>

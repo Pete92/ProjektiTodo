@@ -7,8 +7,15 @@ const state = {
 };
 const getters = {};
 
-
 const actions = {
+    // Hakee kirjautuneen käyttäjän tiedot 
+    /* getUser( {commit} ){
+        axios.get("api/application/current")
+        .then( response => {
+            commit('setUser', response.data );
+        });
+    },
+   */
 
     /* Action joka tekee uuden käyttäjän */
     registerUser({}, user){
@@ -64,9 +71,12 @@ const actions = {
         window.location.replace('/login');  //käyttäjä laitetaan sivulle /login
     },
 };
-const mutations = {}; 
-
-
+const mutations = {
+    //Asettaa stateen käyttäjän
+    /* setUser( state, data ) {
+        state.user = data;
+    } */
+}; 
 
 export default {
     namespaced: true,

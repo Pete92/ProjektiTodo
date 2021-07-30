@@ -8,7 +8,7 @@
             <label class="form-label">Salasana</label>
             <input type="password" class="form-control" v-model="user.password">
         </div>
-        <button type="submit" @click="login(user)" class="btn btn-primary">Submit</button>
+        <button type="submit" @click="login(user)" class="btn btn-primary">Kirjaudu</button>
     </div>
 </template>
 

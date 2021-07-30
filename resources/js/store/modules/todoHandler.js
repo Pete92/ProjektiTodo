@@ -7,8 +7,7 @@ const state = {
     items: [],
 };
 
-const getters = {
-};
+const getters = {};
 
 const actions = {
     //Tekee uuden tehtävän
@@ -19,7 +18,7 @@ const actions = {
         }
         /* Uuden tehtävän teko käyttäen axios ja post */
        axios
-        .post('/api/application/todo/', {
+        .post('/api/application/store', {
             name: item.name,
             highpriority: item.highpriority,
         })
@@ -32,11 +31,10 @@ const actions = {
         commit('ADD_ITEM', item); /* Kutsuu mutationia */
     },
 
-
     /* Hakee tehtävät tietokannasta */
     getItems( {commit} ){
         axios
-        .get('api/application/todo') //reitti jossa kaikki tehtävät on
+        .get('api/application/items') //reitti jossa kaikki tehtävät on
         .then( response =>{
             commit('ITEMS', response.data); //Mutation joka laittaa response.datassa olevat itemit items arrayhin
         })
@@ -46,7 +44,7 @@ const actions = {
     //Tehtävä tehty
     itemDone({commit}, item){
         axios
-        .put('api/application/todo/' + item.id)
+        .put('api/application/' + item.id)
         .then(response => {
             console.log(response.data)
         })
@@ -56,18 +54,16 @@ const actions = {
     //Tietyn tehtävän poistaminen
     deleteItem({commit}, item) {
         axios
-        .delete('api/application/todo/' + item.id)
+        .delete('api/application/' + item.id)
         .then(res => console.log(res))
         commit('DELETE_ITEM', item);
     },
-   
-
 };
 
 const mutations = {
     //Laitetaan itemit array items stateen
-    ITEMS(state, items){
-      state.items = items;
+    ITEMS(state, data){
+      state.items = data;
     },
 
     //Lisää tehtävä, unshift laittaa stateen ylimmäiseksi
@@ -79,7 +75,6 @@ const mutations = {
     })
     },
  
-
     //Poistaa tietyn id:en statesta
     DELETE_ITEM(state, item) {
     var index = state.items.findIndex(i => i.id == item.id);
@@ -91,9 +86,6 @@ const mutations = {
         state.items.find(i => i.id == item.id); 
     } 
 };
-
-
-
 
 export default {
     namespaced: true,

@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\v1\LoginController;
 use App\Http\Controllers\api\v1\RegisterController;
+//use App\Http\Controllers\api\v1\UserController; //Käyttöön jos halutaan storeen käyttäjän tiedot
 use App\Http\Controllers\ItemController;
 
 /*
@@ -23,8 +24,21 @@ use App\Http\Controllers\ItemController;
 Route::post('/login', [LoginController::class, 'login']);
 Route::post('/register', [RegisterController::class, 'register']);
 
-//todo reitti
+
 Route::prefix('/application')->group( function() {
-    //todo resource controlleri, auth:apin kanssa
-    Route::middleware('auth:api')->resource('todo', ItemController::class);
+
+    #Reitti jos halutaan kirjautuneen käyttäjän tiedot, voidaan käyttää jos on tarvetta
+    //Route::get('/current', [UserController::Class, 'currentUser']);
+    
+    #Hakee tehtävät
+    Route::middleware('auth:api')->get('/items', [ItemController::class, 'index']);
+    
+    #Tallennetaan tehtävä
+    Route::middleware('auth:api')->post('/store', [ItemController::class, 'store']);
+
+    #Muokataan tehtävää
+    Route::middleware('auth:api')->put('/{id}', [ItemController::class, 'update']);
+
+    #Poistetaan tehtävä
+    Route::middleware('auth:api')->delete('/{id}', [ItemController::class, 'destroy']);
 });

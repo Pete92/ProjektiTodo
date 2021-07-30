@@ -20,15 +20,11 @@
             <label class="form-label">Salasana Uudelleen</label>
             <input type="password" v-model="user.confirm_password" class="form-control">
         </div>
-        <button type="submit" @click="register(user)" class="btn btn-primary">Submit</button>
+        <button type="submit" @click="register(user)" class="btn btn-primary">Rekisteröidy</button>
     </div>
 </template>
 
-
-
 <script>
-
-
 export default {
     data: () => ({
         /* v-modeleista tiedot */

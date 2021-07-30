@@ -21,7 +21,7 @@ import router from './router'               //router spa
 
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
-Vue.component('register-form', require('./components/registerForm.vue').default);   /* Rekisteriröinti tapahtuu vuejs avulla ja nyt voidaan lisätä tämä kompentti sivulle */
+Vue.component('register-form', require('./components/registerForm.vue').default);   /* Rekisteriröinti tapahtuu vuejs avulla ja nyt voidaan lisätä tämä */
 Vue.component('login-form', require('./components/loginForm.vue').default);         /* Sama homma kirjautumisella */
 Vue.component('app-container', require('./components/appContainer.vue').default);   /* AppContainer joka toimii SPA etusivuna */
 

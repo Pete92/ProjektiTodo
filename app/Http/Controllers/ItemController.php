@@ -19,13 +19,25 @@ class ItemController extends Controller
     public function index()
     {
      
-       $id = Auth::id();                                   //kirjautuneen käyttäjän id muuttujaan
+        $id = Auth::id();                        //kirjautuneen käyttäjän id muuttujaan
         
-       $results = DB::table('items')
-        ->where('user_id', $id)
-        ->orderBy('items.id', 'DESC')
-        ->get();
+        $results = DB::table('items')
+        ->where('user_id', $id)                 //Missä user_id on käyttäjän id
+        ->orderBy('items.id', 'DESC')           //Järjestyksessä uusin esin
+        ->get();        
+
+  
+
+        #Tekee Tyhjän rivin todo listalle ja tulee unshift errori tulee kun tehdään uusi tehtävä
+        /* if($results->isEmpty()) {
+            return response(['message' => 'Tehtäviä ei ole.']);
+        } else {
+            return $results;
+        } */
+      
+        //Postman palauttaa tyhjän arrayn, jos ei ole tehtäviä
         return $results;
+        
     }
 
     /**
@@ -47,12 +59,14 @@ class ItemController extends Controller
     public function store(Request $request)
     {
 
+
         $id = Auth::id(); 
-        $newItem = new Item;
+        $newItem = new Item;    //Uuden tehtävän tallennus
         
         $newItem->name = $request->name;
         $newItem->highpriority = $request->highpriority;
         $newItem->user_id = $id;
+        
         $newItem->save();
 
         return $newItem;
@@ -105,7 +119,7 @@ class ItemController extends Controller
         }
 
 
-        return "Item not found.";
+        return "Tehtävää ei löytynyt.";
     }
 
     /**
@@ -116,13 +130,13 @@ class ItemController extends Controller
      */
     public function destroy($id)
     {
-        $existing = Item::find($id);
+        $existing = Item::find($id); //Etsi tämä id
 
-        if($existing){
-            $existing->delete();
+        if($existing){    //jos löyty
+            $existing->delete();    //poista
 
-            return 'Item deleted succesfully.';
+            return 'Tehtävä poistettu onnistuneesti.';
         }
-        return "Item not found.";
+        return "Tehtävää ei löytynyt.";
     }
 }

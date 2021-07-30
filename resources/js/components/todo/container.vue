@@ -20,7 +20,6 @@ export default {
         listView,   //komponenttiin lisäys jotta voidaan renderöidä sivulla
         addItemForm
     },
-    
 }
 </script>
 

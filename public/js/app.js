@@ -1899,7 +1899,7 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    //kun painetaan @click="logout"
+    //kun painetaan logout
     logout: function logout() {
       this.$store.dispatch("currentUser/logoutUser"); //kutsuu actionin joka loggaa ulos käyttäjän
     }
@@ -1909,7 +1909,7 @@ __webpack_require__.r(__webpack_exports__);
     //jos localStrogaessa on tokeni nimeltä login_token 
     if (localStorage.hasOwnProperty("login_token")) {
       //Jos vaihdetaan sivua niin tämä tokeni pysyy localStoragessa. esim jos mennää info sivulle, niin tokeni pysyy
-      axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('login_token');
+      axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('login_token'); //this.$store.dispatch('currentUser/getUser');  Jos halutaan kirjautunut käyttäjä stateen
     } else {
       window.location.replace("/login"); //muuten palataan /login sivulle
     }
@@ -1929,8 +1929,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-//
-//
 //
 //
 //
@@ -2009,8 +2007,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-//
-//
 //
 //
 //
@@ -2278,7 +2274,7 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js"
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('register-form', __webpack_require__(/*! ./components/registerForm.vue */ "./resources/js/components/registerForm.vue").default);
-/* Rekisteriröinti tapahtuu vuejs avulla ja nyt voidaan lisätä tämä kompentti sivulle */
+/* Rekisteriröinti tapahtuu vuejs avulla ja nyt voidaan lisätä tämä */
 
 Vue.component('login-form', __webpack_require__(/*! ./components/loginForm.vue */ "./resources/js/components/loginForm.vue").default);
 /* Sama homma kirjautumisella */
@@ -2448,6 +2444,16 @@ var state = {
 };
 var getters = {};
 var actions = {
+  // Hakee kirjautuneen käyttäjän tiedot 
+
+  /* getUser( {commit} ){
+      axios.get("api/application/current")
+      .then( response => {
+          commit('setUser', response.data );
+      });
+  },
+  */
+
   /* Action joka tekee uuden käyttäjän */
   registerUser: function registerUser(_ref, user) {
     _objectDestructuringEmpty(_ref);
@@ -2503,7 +2509,12 @@ var actions = {
     window.location.replace('/login'); //käyttäjä laitetaan sivulle /login
   }
 };
-var mutations = {};
+var mutations = {//Asettaa stateen käyttäjän
+
+  /* setUser( state, data ) {
+      state.user = data;
+  } */
+};
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   namespaced: true,
   state: state,
@@ -2548,7 +2559,7 @@ var actions = {
     /* Uuden tehtävän teko käyttäen axios ja post */
 
 
-    axios__WEBPACK_IMPORTED_MODULE_0___default().post('/api/application/todo/', {
+    axios__WEBPACK_IMPORTED_MODULE_0___default().post('/api/application/store', {
       name: item.name,
       highpriority: item.highpriority
     }).then(function (response) {
@@ -2564,7 +2575,7 @@ var actions = {
   /* Hakee tehtävät tietokannasta */
   getItems: function getItems(_ref2) {
     var commit = _ref2.commit;
-    axios__WEBPACK_IMPORTED_MODULE_0___default().get('api/application/todo') //reitti jossa kaikki tehtävät on
+    axios__WEBPACK_IMPORTED_MODULE_0___default().get('api/application/items') //reitti jossa kaikki tehtävät on
     .then(function (response) {
       commit('ITEMS', response.data); //Mutation joka laittaa response.datassa olevat itemit items arrayhin
     });
@@ -2572,7 +2583,7 @@ var actions = {
   //Tehtävä tehty
   itemDone: function itemDone(_ref3, item) {
     var commit = _ref3.commit;
-    axios__WEBPACK_IMPORTED_MODULE_0___default().put('api/application/todo/' + item.id).then(function (response) {
+    axios__WEBPACK_IMPORTED_MODULE_0___default().put('api/application/' + item.id).then(function (response) {
       console.log(response.data);
     });
     commit('UPDATE_ITEM', item);
@@ -2580,7 +2591,7 @@ var actions = {
   //Tietyn tehtävän poistaminen
   deleteItem: function deleteItem(_ref4, item) {
     var commit = _ref4.commit;
-    axios__WEBPACK_IMPORTED_MODULE_0___default().delete('api/application/todo/' + item.id).then(function (res) {
+    axios__WEBPACK_IMPORTED_MODULE_0___default().delete('api/application/' + item.id).then(function (res) {
       return console.log(res);
     });
     commit('DELETE_ITEM', item);
@@ -2588,8 +2599,8 @@ var actions = {
 };
 var mutations = {
   //Laitetaan itemit array items stateen
-  ITEMS: function ITEMS(state, items) {
-    state.items = items;
+  ITEMS: function ITEMS(state, data) {
+    state.items = data;
   },
   //Lisää tehtävä, unshift laittaa stateen ylimmäiseksi
   ADD_ITEM: function ADD_ITEM(state, item) {
@@ -40252,7 +40263,7 @@ var render = function() {
           }
         }
       },
-      [_vm._v("Submit")]
+      [_vm._v("Kirjaudu")]
     )
   ])
 }
@@ -40423,7 +40434,7 @@ var render = function() {
           }
         }
       },
-      [_vm._v("Submit")]
+      [_vm._v("Rekisteröidy")]
     )
   ])
 }
